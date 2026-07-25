@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import {
   Avatar,
   AvatarGroup,
@@ -22,6 +22,7 @@ import {
   TrendingUp,
   ArrowUpwardRounded,
 } from "@mui/icons-material";
+import { GlobalAction } from "../../Context/globalActionContext";
 
 const statCards = [
   {
@@ -55,9 +56,21 @@ const statCards = [
 ];
 
 const recentApprovals = [
-  { name: "Priya Sharma", request: "Leave request · 3 days", status: "Pending" },
-  { name: "Rahul Dev", request: "Role change to Moderator", status: "Approved" },
-  { name: "Anish Krishnan", request: "Permission: Export data", status: "Pending" },
+  {
+    name: "Priya Sharma",
+    request: "Leave request · 3 days",
+    status: "Pending",
+  },
+  {
+    name: "Rahul Dev",
+    request: "Role change to Moderator",
+    status: "Approved",
+  },
+  {
+    name: "Anish Krishnan",
+    request: "Permission: Export data",
+    status: "Pending",
+  },
   { name: "Meera Nair", request: "Leave request · 1 day", status: "Rejected" },
 ];
 
@@ -83,7 +96,11 @@ const StatCard = ({ label, value, delta, icon: Icon, color }) => {
         minWidth: 220,
       }}
     >
-      <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
+      <Stack
+        direction="row"
+        alignItems="flex-start"
+        justifyContent="space-between"
+      >
         <Box
           sx={{
             width: 42,
@@ -92,7 +109,10 @@ const StatCard = ({ label, value, delta, icon: Icon, color }) => {
             display: "grid",
             placeItems: "center",
             color: `${color}.main`,
-            backgroundColor: alpha(theme.palette[color].main, theme.palette.mode === "dark" ? 0.18 : 0.1),
+            backgroundColor: alpha(
+              theme.palette[color].main,
+              theme.palette.mode === "dark" ? 0.18 : 0.1,
+            ),
           }}
         >
           <Icon fontSize="small" />
@@ -102,7 +122,10 @@ const StatCard = ({ label, value, delta, icon: Icon, color }) => {
           icon={<ArrowUpwardRounded sx={{ fontSize: "14px !important" }} />}
           label={delta}
           sx={{
-            bgcolor: alpha(theme.palette.success.main, theme.palette.mode === "dark" ? 0.16 : 0.1),
+            bgcolor: alpha(
+              theme.palette.success.main,
+              theme.palette.mode === "dark" ? 0.16 : 0.1,
+            ),
             color: "success.main",
             fontSize: "0.7rem",
           }}
@@ -121,11 +144,12 @@ const StatCard = ({ label, value, delta, icon: Icon, color }) => {
 const DashboardView = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const { user } = useContext(GlobalAction);
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: "auto" }}>
+    <Box>
       {/* Welcome banner */}
-      <Card
+      {/* <Card
         sx={{
           p: { xs: 3, md: 4 },
           mb: 3,
@@ -135,42 +159,36 @@ const DashboardView = () => {
           backgroundImage: `linear-gradient(120deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 55%, ${theme.palette.secondary.main} 130%)`,
           border: "none",
         }}
+      > */}
+
+      <Typography
+        sx={{
+          fontSize: "1.5rem",
+          fontWeight: 700,
+          mb: 2,
+        }}
       >
+        Welcome Back{" "}
         <Box
+          component="span"
           sx={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "radial-gradient(circle at 85% 20%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 45%)",
+            fontSize: "1.5rem",
+            fontWeight: 700,
+            background: `linear-gradient(
+        120deg,
+        ${theme.palette.primary.dark} 0%,
+        ${theme.palette.primary.main} 55%,
+        ${theme.palette.secondary.main} 100%
+      )`,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            display: "inline-block",
           }}
-        />
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "flex-start", sm: "center" }}
-          spacing={2}
-          sx={{ position: "relative" }}
         >
-          <Box>
-            <Typography variant="overline" sx={{ opacity: 0.85 }}>
-              Welcome back
-            </Typography>
-            <Typography variant="h4" sx={{ mt: 0.5 }}>
-              Here's what needs your attention
-            </Typography>
-            <Typography variant="body2" sx={{ opacity: 0.85, mt: 1, maxWidth: 480 }}>
-              36 approvals are waiting for review and 3 permission changes were
-              requested in the last 24 hours.
-            </Typography>
-          </Box>
-          <AvatarGroup max={4} sx={{ "& .MuiAvatar-root": { border: "2px solid rgba(255,255,255,0.5)" } }}>
-            <Avatar sx={{ bgcolor: "rgba(255,255,255,0.2)" }}>PS</Avatar>
-            <Avatar sx={{ bgcolor: "rgba(255,255,255,0.2)" }}>RD</Avatar>
-            <Avatar sx={{ bgcolor: "rgba(255,255,255,0.2)" }}>AK</Avatar>
-            <Avatar sx={{ bgcolor: "rgba(255,255,255,0.2)" }}>MN</Avatar>
-          </AvatarGroup>
-        </Stack>
-      </Card>
+          {user?.name}
+        </Box>
+      </Typography>
 
       {/* Stat cards */}
       <Stack direction="row" flexWrap="wrap" gap={2.5} sx={{ mb: 3 }}>
@@ -182,7 +200,12 @@ const DashboardView = () => {
       <Stack direction={{ xs: "column", lg: "row" }} spacing={2.5}>
         {/* Recent approvals */}
         <Card sx={{ p: 3, flex: "2 1 0" }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ mb: 1 }}
+          >
             <Typography variant="h6">Recent approval activity</Typography>
             <Chip size="small" label="Last 24h" variant="outlined" />
           </Stack>
@@ -203,7 +226,10 @@ const DashboardView = () => {
                       height: 36,
                       fontSize: "0.8rem",
                       fontWeight: 700,
-                      bgcolor: alpha(theme.palette.primary.main, isDark ? 0.22 : 0.12),
+                      bgcolor: alpha(
+                        theme.palette.primary.main,
+                        isDark ? 0.22 : 0.12,
+                      ),
                       color: "primary.main",
                     }}
                   >
@@ -221,7 +247,12 @@ const DashboardView = () => {
                     </Typography>
                   </Box>
                 </Stack>
-                <Chip size="small" label={item.status} color={statusColor[item.status]} variant="filled" />
+                <Chip
+                  size="small"
+                  label={item.status}
+                  color={statusColor[item.status]}
+                  variant="filled"
+                />
               </Stack>
             ))}
           </Stack>
@@ -236,7 +267,11 @@ const DashboardView = () => {
           <Stack spacing={2.5}>
             {roleDistribution.map((r) => (
               <Box key={r.role}>
-                <Stack direction="row" justifyContent="space-between" sx={{ mb: 0.75 }}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{ mb: 0.75 }}
+                >
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
                     {r.role}
                   </Typography>
@@ -250,7 +285,10 @@ const DashboardView = () => {
                   sx={{
                     height: 8,
                     borderRadius: 6,
-                    bgcolor: alpha(theme.palette.primary.main, isDark ? 0.14 : 0.08),
+                    bgcolor: alpha(
+                      theme.palette.primary.main,
+                      isDark ? 0.14 : 0.08,
+                    ),
                     "& .MuiLinearProgress-bar": {
                       borderRadius: 6,
                       backgroundImage: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,

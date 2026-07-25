@@ -44,7 +44,7 @@ export const createUser = async (data, setAction) => {
         role_id: data.role_id,
         email: data.email,
         password: data.password,
-        status: data.status,
+        status: "active",
       }),
     });
     if (!req.ok) {
@@ -53,7 +53,7 @@ export const createUser = async (data, setAction) => {
     const res = await req.json();
     if (res?.status_code === 200 && res?.status === "success") {
       successSnackbar(res?.message, setAction);
-      return res?.data;
+      return { data: res?.data, status_code: res?.status_code };
     } else {
       erroSnackbar(res?.message, setAction);
     }
@@ -107,7 +107,7 @@ export const UpdateUser = async (data, setAction) => {
     const res = await req.json();
     if (res?.status_code === 200) {
       successSnackbar(res?.message, setAction);
-      return res?.data;
+      return { data: res?.data, status_code: res?.status_code };
     } else {
       throw new Error(res?.message);
     }

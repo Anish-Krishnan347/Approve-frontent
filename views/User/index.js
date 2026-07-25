@@ -71,14 +71,19 @@ const UserManagent = () => {
     try {
       if (userData?.id) {
         const update = await UpdateUser(userData, setAction);
-        setUser(update);
+        if (update?.status_code === 200) {
+          userList();
+          setUser(update?.data);
+          handleClose(); // close modal and reset data
+        }
       } else {
         const creat = await createUser(userData, setAction);
-
-        setUser(creat);
+        if (creat?.status_code === 200) {
+          userList();
+          setUser(creat?.data);
+          handleClose(); // close modal and reset data
+        }
       }
-
-      handleClose(); // close modal and reset data
     } catch (err) {
       console.error("Save failed:", err);
       // optionally show an error message to the user
@@ -94,7 +99,7 @@ const UserManagent = () => {
   const handleDelete = async () => {
     const deleteU = await DeleteUser(userData?.id, setAction);
     setUser(deleteU);
-    handleClose()
+    handleClose();
   };
   React.useEffect(() => {
     if (error) {
@@ -121,7 +126,7 @@ const UserManagent = () => {
         <Typography variant="h6">User Management</Typography>
         <AddMoreButton
           onClick={() => {
-            setModalOpen(true), setUserData({ ...userData, purpose: "add" });
+            (setModalOpen(true), setUserData({ ...userData, purpose: "add" }));
           }}
         />
       </Box>
@@ -165,12 +170,12 @@ const UserManagent = () => {
                     <>
                       <CustomeEditButton
                         onClick={() => {
-                          setModalOpen(true), setUserData(user);
+                          (setModalOpen(true), setUserData(user));
                         }}
                       />
                       <CustomeDeletButton
                         onClick={() => {
-                          setOpen(true), setUserData(user);
+                          (setOpen(true), setUserData(user));
                         }}
                       />
                     </>

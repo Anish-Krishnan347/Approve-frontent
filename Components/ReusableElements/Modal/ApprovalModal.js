@@ -1,14 +1,12 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import DeleteButton from "../Buttons/DeleteButton";
 import CancelButton from "../Buttons/CancelButton";
 import { Avatar, Typography } from "@mui/material";
-import { Delete, Done, TaskAlt } from "@mui/icons-material";
+import { TaskAlt } from "@mui/icons-material";
 import ApprovalButton from "../Buttons/ApprovalButton";
 
 export default function ApprovalModal({ open, setOpen, value, onClick }) {
@@ -38,9 +36,12 @@ export default function ApprovalModal({ open, setOpen, value, onClick }) {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            id="alert-dialog-description"
+            sx={{ display: "flex", alignItems: "center", gap: 1 }}
+          >
             Are you sure! You want to approve{" "}
-            <b style={{ color: "#000" }}>{value}</b>
+            <Typography color="text.primary">{value}</Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

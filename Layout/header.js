@@ -25,8 +25,9 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useThemeMode } from "../Context/ThemeModeContext";
+import { GlobalAction } from "../Context/globalActionContext";
 
 const drawerWidth = 280;
 
@@ -37,6 +38,7 @@ const AdminHeader = ({ onDrawerToggle }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const router = useRouter();
   const [notificationAnchor, setNotificationAnchor] = React.useState(null);
+  const { user } = useContext(GlobalAction);
 
   const handleProfileMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleProfileMenuClose = () => setAnchorEl(null);
@@ -44,13 +46,24 @@ const AdminHeader = ({ onDrawerToggle }) => {
     localStorage.removeItem("userData");
     router.push("/");
   };
-  const handleNotificationOpen = (event) => setNotificationAnchor(event.currentTarget);
+  const handleNotificationOpen = (event) =>
+    setNotificationAnchor(event.currentTarget);
   const handleNotificationClose = () => setNotificationAnchor(null);
 
   const notifications = [
     { id: 1, title: "New user registered", time: "2 min ago", unread: true },
-    { id: 2, title: "Approval request pending", time: "15 min ago", unread: true },
-    { id: 3, title: "System backup completed", time: "1 hour ago", unread: false },
+    {
+      id: 2,
+      title: "Approval request pending",
+      time: "15 min ago",
+      unread: true,
+    },
+    {
+      id: 3,
+      title: "System backup completed",
+      time: "1 hour ago",
+      unread: false,
+    },
     { id: 4, title: "Weekly report ready", time: "2 hours ago", unread: false },
   ];
   const unreadCount = notifications.filter((n) => n.unread).length;
@@ -61,7 +74,9 @@ const AdminHeader = ({ onDrawerToggle }) => {
       elevation={0}
       sx={{
         zIndex: (t) => t.zIndex.drawer + 1,
-        backgroundColor: isDark ? alpha("#12131C", 0.75) : alpha("#FFFFFF", 0.8),
+        backgroundColor: isDark
+          ? alpha("#12131C", 0.75)
+          : alpha("#FFFFFF", 0.8),
         backdropFilter: "blur(14px)",
         color: "text.primary",
         borderBottom: `1px solid ${theme.palette.divider}`,
@@ -77,24 +92,6 @@ const AdminHeader = ({ onDrawerToggle }) => {
 
         {/* Brand mark */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, mr: 3 }}>
-          <Box
-            sx={{
-              width: 34,
-              height: 34,
-              borderRadius: "10px",
-              display: "grid",
-              placeItems: "center",
-              fontFamily: '"Plus Jakarta Sans", sans-serif',
-              fontWeight: 800,
-              color: "#fff",
-              backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-              boxShadow: isDark
-                ? "0 4px 14px rgba(99,102,241,0.4)"
-                : "0 4px 14px rgba(67,56,163,0.3)",
-            }}
-          >
-            A
-          </Box>
           <Typography
             variant="h6"
             sx={{
@@ -107,15 +104,26 @@ const AdminHeader = ({ onDrawerToggle }) => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, ml: "auto" }}>
-          <Tooltip title={isDark ? "Switch to light mode" : "Switch to dark mode"}>
+        <Box
+          sx={{ display: "flex", alignItems: "center", gap: 0.75, ml: "auto" }}
+        >
+          <Tooltip
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
             <IconButton onClick={toggleMode} sx={{ color: "text.secondary" }}>
-              {isDark ? <LightModeRounded fontSize="small" /> : <DarkModeRounded fontSize="small" />}
+              {isDark ? (
+                <LightModeRounded fontSize="small" />
+              ) : (
+                <DarkModeRounded fontSize="small" />
+              )}
             </IconButton>
           </Tooltip>
 
           <Tooltip title="Notifications">
-            <IconButton onClick={handleNotificationOpen} sx={{ color: "text.secondary" }}>
+            <IconButton
+              onClick={handleNotificationOpen}
+              sx={{ color: "text.secondary" }}
+            >
               <Badge badgeContent={unreadCount} color="error">
                 <NotificationsNoneRounded fontSize="small" />
               </Badge>
@@ -132,7 +140,8 @@ const AdminHeader = ({ onDrawerToggle }) => {
                 backgroundImage: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               }}
             >
-              JD
+              {user?.name?.charAt(0).toUpperCase() +
+                user?.name?.charAt(1).toUpperCase()}
             </Avatar>
           </IconButton>
         </Box>
@@ -185,12 +194,30 @@ const AdminHeader = ({ onDrawerToggle }) => {
                   : "transparent",
               }}
             >
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <Typography variant="body2" sx={{ fontWeight: notification.unread ? 700 : 500 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: notification.unread ? 700 : 500 }}
+                >
                   {notification.title}
                 </Typography>
                 {notification.unread && (
-                  <Box sx={{ width: 7, height: 7, bgcolor: "primary.main", borderRadius: "50%", ml: 1, mt: 0.5 }} />
+                  <Box
+                    sx={{
+                      width: 7,
+                      height: 7,
+                      bgcolor: "primary.main",
+                      borderRadius: "50%",
+                      ml: 1,
+                      mt: 0.5,
+                    }}
+                  />
                 )}
               </Box>
               <Typography variant="caption" color="text.secondary">

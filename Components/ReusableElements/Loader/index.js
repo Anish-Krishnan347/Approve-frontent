@@ -1,7 +1,11 @@
-import Box from '@mui/material/Box'
+import Box from "@mui/material/Box";
+import { useTheme, alpha } from "@mui/material/styles";
 
+export const CustomLoader = ({ size = 24 }) => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const barColor = theme.palette.primary.main;
 
-export const CustomLoader = ({ size = 24, barColor = "rgb(128, 128, 128)" }) => {
   return (
     <Box
       sx={{
@@ -10,7 +14,11 @@ export const CustomLoader = ({ size = 24, barColor = "rgb(128, 128, 128)" }) => 
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(255, 255, 255, 0.6)", // Semi-transparent overlay
+        backgroundColor: alpha(
+          theme.palette.background.default,
+          isDark ? 0.7 : 0.6,
+        ),
+        // backdropFilter: "blur(2px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -37,15 +45,15 @@ export const CustomLoader = ({ size = 24, barColor = "rgb(128, 128, 128)" }) => 
               top: "35%",
               opacity: 0,
               borderRadius: "50px",
-              boxShadow: "0 0 3px rgba(0, 0, 0, 0.2)",
+              boxShadow: isDark
+                ? "0 0 3px rgba(0, 0, 0, 0.5)"
+                : "0 0 3px rgba(0, 0, 0, 0.2)",
               animation: "fade458 1s linear infinite",
               transform: `rotate(${index * 30}deg) translate(0, -130%)`,
               animationDelay: `${-1.2 + index * 0.1}s`,
             }}
           />
         ))}
-
-        {/* <Typography sx={{color:"rgb(128, 128, 128)"}}>Loading...</Typography> */}
       </Box>
       <style>
         {`

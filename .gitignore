@@ -1,2 +1,20 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables & secrets
 .env
-/node_modules
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Package manager locks (optional - see note below)
+package-lock.json
+
+# Debug & system files
+*.log
+.DS_Store

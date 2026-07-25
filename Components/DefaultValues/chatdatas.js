@@ -1,0 +1,100 @@
+export const conversations = [
+  {
+    id: "c1",
+    name: "Priya Sharma",
+    role: "HR Manager",
+    online: true,
+    unread: 2,
+    lastMessage: "Sure, I'll review the leave request today.",
+    lastMessageTime: "09:41 AM",
+    messages: [
+      {
+        id: 1,
+        sender: "them",
+        text: "Hi! Did you get a chance to check the new approval?",
+        time: "09:12 AM",
+      },
+      {
+        id: 2,
+        sender: "me",
+        text: "Not yet, I'll look at it in a bit.",
+        time: "09:15 AM",
+      },
+      {
+        id: 3,
+        sender: "them",
+        text: "No rush, just wanted to flag it's a bit urgent.",
+        time: "09:16 AM",
+      },
+      {
+        id: 4,
+        sender: "them",
+        text: "Sure, I'll review the leave request today.",
+        time: "09:41 AM",
+      },
+    ],
+  },
+  {
+    id: "c2",
+    name: "Rahul Dev",
+    role: "Team Lead",
+    online: false,
+    unread: 0,
+    lastMessage: "Thanks, role change is approved.",
+    lastMessageTime: "Yesterday",
+    messages: [
+      {
+        id: 1,
+        sender: "me",
+        text: "Hey, can you approve Rahul's role change?",
+        time: "Yesterday, 4:02 PM",
+      },
+      {
+        id: 2,
+        sender: "them",
+        text: "Thanks, role change is approved.",
+        time: "Yesterday, 4:20 PM",
+      },
+    ],
+  },
+  {
+    id: "c3",
+    name: "Anish Krishnan",
+    role: "Administrator",
+    online: true,
+    unread: 0,
+    lastMessage: "Sounds good, I'll set up the permissions.",
+    lastMessageTime: "Yesterday",
+    messages: [
+      {
+        id: 1,
+        sender: "them",
+        text: "Can you set up export permissions for the finance team?",
+        time: "Yesterday, 2:10 PM",
+      },
+      {
+        id: 2,
+        sender: "me",
+        text: "Sounds good, I'll set up the permissions.",
+        time: "Yesterday, 2:15 PM",
+      },
+    ],
+  },
+  {
+    id: "c4",
+    name: "Meera Nair",
+    role: "Employee",
+    online: false,
+    unread: 1,
+    lastMessage: "My leave request is still pending, any update?",
+    lastMessageTime: "Mon",
+    messages: [
+      {
+        id: 1,
+        sender: "them",
+        text: "Hi, my leave request is still pending, any update?",
+        time: "Mon, 11:00 AM",
+      },
+    ],
+  },
+];

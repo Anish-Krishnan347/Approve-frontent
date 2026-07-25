@@ -61,12 +61,11 @@ const ApprovalManagement = () => {
   React.useEffect(() => {
     fetchUser();
   }, []);
-
-  console.log(approvalData);
+  console.log(user,'request')
 
   return (
     <>
-      {user?.length < 0 ? (
+      {user?.length > 0 ? (
         <>
           <Box sx={{ mb: 3 }}>
             <Typography variant="h6">Approval Management</Typography>

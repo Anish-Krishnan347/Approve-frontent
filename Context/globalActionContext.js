@@ -8,6 +8,7 @@ const ActionProvider = ({ children }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
 
+  
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       const user_data = localStorage.getItem("userData");
