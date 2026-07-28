@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
   AvatarGroup,
@@ -23,6 +23,7 @@ import {
   ArrowUpwardRounded,
 } from "@mui/icons-material";
 import { GlobalAction } from "../../Context/globalActionContext";
+import { getDashboardData } from "@/pages/api/dashborad-api";
 
 const statCards = [
   {
@@ -145,7 +146,18 @@ const DashboardView = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const { user } = useContext(GlobalAction);
-  console.log(user,'user')
+  console.log(user, "user");
+
+  const [dashboardData, setDashboardData] = useState([]);
+
+  const getDashboard = async () => {
+    const req = await getDashboardData();
+    setDashboardData(req);
+  };
+
+  useEffect(() => {
+    getDashboard();
+  }, []);
 
   return (
     <Box>
