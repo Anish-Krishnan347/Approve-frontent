@@ -2,10 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/user": "pages/user.js",
-  "/approval": "pages/approval.js",
-  "/role": "pages/role.js",
-  "/permission": "pages/permission.js",
-  "/permission_approval": "pages/permission_approval.js",
+  "/": "pages/index.js",
   "/dashboard": "pages/dashboard.js"
 }

@@ -32,6 +32,7 @@ import { GlobalAction } from "../../Context/globalActionContext";
 import { useThemeMode } from "../../Context/ThemeModeContext";
 import { loginFunction } from "@/pages/api/auth_apies";
 import { DarkModeRounded, LightModeRounded } from "@mui/icons-material";
+import { setCookie } from "cookies-next";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -51,10 +52,10 @@ export default function LoginPage() {
       }));
       return;
     }
-    const req = await loginFunction(loginData, setIsLoading, router);
-    if (req?.status_code === 200) {
-      const userData = JSON.stringify(req?.data);
-      localStorage.setItem("userData", userData);
+    const req = await loginFunction(loginData, setIsLoading);
+    if (req?.status === "success") {
+      const authData = JSON.stringify(req?.data?.user_data);
+      localStorage.setItem("userData", authData);
       router.push("/dashboard");
     }
   };
@@ -64,7 +65,7 @@ export default function LoginPage() {
       setIsLoading(false);
     }, 3000);
 
-    return () => clearTimeout(timer);   
+    return () => clearTimeout(timer);
   }, []);
   return (
     <Box
@@ -83,7 +84,12 @@ export default function LoginPage() {
     >
       <IconButton
         onClick={toggleMode}
-        sx={{ position: "absolute", top: 20, right: 20, color: "text.secondary" }}
+        sx={{
+          position: "absolute",
+          top: 20,
+          right: 20,
+          color: "text.secondary",
+        }}
       >
         {isDark ? <LightModeRounded /> : <DarkModeRounded />}
       </IconButton>

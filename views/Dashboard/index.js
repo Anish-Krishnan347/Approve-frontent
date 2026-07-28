@@ -145,6 +145,7 @@ const DashboardView = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const { user } = useContext(GlobalAction);
+  console.log(user,'user')
 
   return (
     <Box>
