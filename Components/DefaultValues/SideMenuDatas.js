@@ -6,6 +6,7 @@ import {
   LockPerson,
   HowToReg,
   ChatBubbleOutlineRounded,
+  Settings,
 } from "@mui/icons-material";
 
 export const menuData = [
@@ -16,39 +17,46 @@ export const menuData = [
     path: "/dashboard",
   },
   {
-    id: "role",
-    title: "Role Management",
-    icon: Analytics,
-    path: "/role",
-  },
-  {
     id: "user",
     title: "User Management",
     icon: People,
     path: "/user",
   },
   {
-    id: "approval",
-    title: "User Approval",
-    path: "/approval",
-    icon: HowToReg,
-  },
-  {
     id: "permission",
-    title: "Permission Management",
+    title: "Permission",
     path: "/permission",
     icon: LockPerson,
   },
   {
-    id: "permission_approval",
-    title: "Permission Approval",
-    path: "/permission_approval",
-    icon: TaskAlt,
-  },
-  {
     id: "chat",
-    title: "Chat",
+    title: "We Chat",
     path: "/chat",
     icon: ChatBubbleOutlineRounded,
+  },
+  {
+    id: "settings",
+    title: "Settings",
+    icon: Settings,
+    children: [
+      {
+        id: "approval",
+        title: "User Approval",
+        path: "/approval",
+        icon: HowToReg,
+      },
+      {
+        id: "role",
+        title: "Role Management",
+        icon: Analytics,
+        path: "/role",
+      },
+      {
+        id: "permission_approval",
+        title: "Permission Approval",
+        path: "/permission_approval",
+        icon: TaskAlt,
+      },
+    ],
   },
 ];

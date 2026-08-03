@@ -1,6 +1,7 @@
 import { BASE_URL, credentials, headers, method } from "./commonVariable";
 
 const auth_login = "auth/login";
+const auth_logout = "auth/logout";
 
 export const loginFunction = async (data, setLoadingState) => {
   setLoadingState((prev) => ({ ...prev, isLoading: true, error: null }));
@@ -36,5 +37,21 @@ export const loginFunction = async (data, setLoadingState) => {
     return false;
   } finally {
     setLoadingState((prev) => ({ ...prev, isLoading: false }));
+  }
+};
+
+export const logoutFunction = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/${auth_logout}`, {
+      method: method,
+      credentials: credentials,
+      headers: headers,
+    });
+    const result = await response.json();
+    console.log(result, "result");
+    return result;
+  } catch (error) {
+    console.log(error, "error");
+    return false;
   }
 };

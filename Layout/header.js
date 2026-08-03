@@ -28,6 +28,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 import { useThemeMode } from "../Context/ThemeModeContext";
 import { GlobalAction } from "../Context/globalActionContext";
+import { logoutFunction } from "@/pages/api/auth_apies";
 
 const drawerWidth = 280;
 
@@ -42,9 +43,14 @@ const AdminHeader = ({ onDrawerToggle }) => {
 
   const handleProfileMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleProfileMenuClose = () => setAnchorEl(null);
+
+  
   const handleLogout = () => {
-    localStorage.removeItem("userData");
-    router.push("/");
+    const res = logoutFunction();
+    if(res){
+      localStorage.removeItem("userData");
+      router.push("/");
+    }
   };
   const handleNotificationOpen = (event) =>
     setNotificationAnchor(event.currentTarget);
@@ -67,6 +73,7 @@ const AdminHeader = ({ onDrawerToggle }) => {
     { id: 4, title: "Weekly report ready", time: "2 hours ago", unread: false },
   ];
   const unreadCount = notifications.filter((n) => n.unread).length;
+
 
   return (
     <AppBar

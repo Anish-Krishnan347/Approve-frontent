@@ -2,7 +2,13 @@ import {
   erroSnackbar,
   successSnackbar,
 } from "../../../Components/DefaultValues/SnackBarDatas";
-import { BASE_URL, credentials, headers, method } from "./commonVariable";
+import {
+  BASE_URL,
+  credentials,
+  headers,
+  method,
+  getCookie,
+} from "./commonVariable";
 
 const role_list = "role/list";
 const create_role = "role/create";
@@ -10,6 +16,7 @@ const delete_role = "role/delete";
 const edit_role = "role/update";
 
 export const GetRoleList = async () => {
+  const csrfToken = getCookie("csrf_access_token");
   try {
     const request = await fetch(`${BASE_URL}/${role_list}`, {
       method: method,
@@ -86,7 +93,7 @@ export const EditRole = async (data, setAction) => {
     const response = await request.json();
     if (response.status_code === 200) {
       successSnackbar(response?.message, setAction);
-      return(response)
+      return response;
     } else {
       erroSnackbar("something went wrong while edit role", setAction);
     }

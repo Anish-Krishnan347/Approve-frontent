@@ -12,9 +12,9 @@ export const FetchApprovalList = async () => {
   try {
     const req = await fetch(`${BASE_URL}/${approval_list}`, {
       method: method,
-      credentials: credentials,
       headers: headers,
       body: JSON.stringify({}),
+      credentials: credentials,
     });
     if (!req.ok) {
       throw new Error("Something went wrong");

@@ -82,9 +82,9 @@ const statusColor = {
 };
 
 const roleDistribution = [
-  { role: "Employee", count: 812, pct: 65 },
-  { role: "HR", count: 264, pct: 21 },
-  { role: "Admin", count: 172, pct: 14 },
+  { role: "Employee", count: 812, pct: 75 },
+  { role: "HR", count: 264, pct: 15 },
+  { role: "Admin", count: 172, pct: 10 },
 ];
 
 const StatCard = ({ label, value, delta, icon: Icon, color }) => {
@@ -159,6 +159,37 @@ const DashboardView = () => {
     getDashboard();
   }, []);
 
+  const statCards = [
+  {
+    label: "Total users",
+    value: dashboardData?.total_users,
+    delta: "+8.2%",
+    icon: Group,
+    color: "primary",
+  },
+  {
+    label: "Pending approvals",
+    value: dashboardData?.pending_approvals,
+    delta: "+3 today",
+    icon: HowToReg,
+    color: "warning",
+  },
+  {
+    label: "Active roles",
+    value: dashboardData?.active_roles,
+    delta: "stable",
+    icon: LockPerson,
+    color: "secondary",
+  },
+  {
+    label: "Permission requests",
+    value: dashboardData?.permission_requests,
+    delta: "+14.6%",
+    icon: TaskAlt,
+    color: "success",
+  },
+];
+console.log(dashboardData, "dashboardData");
   return (
     <Box>
       {/* Welcome banner */}
